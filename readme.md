@@ -1,4 +1,4 @@
-# BookStack
+# MillieText
 
 A platform for free and better textbooks. Built on top of BookStack. Can learn more at https://www.MillieText.com/.
 
