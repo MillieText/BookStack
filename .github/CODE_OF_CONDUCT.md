@@ -38,7 +38,7 @@ Project maintainers should generally follow these additional standards:
 is being negative themselves.
 * When providing criticism, try to make it constructive to lead the other person
 down the correct path.
-* Keep the [project definition](https://github.com/BookStackApp/BookStack#project-definition)
+* Keep the [project definition](https://github.com/MillieText/webapp#project-definition)
 in mind when deciding what's in scope of the Project.
 
 ## Our Responsibilities
@@ -66,7 +66,7 @@ further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at the email address shown on [the profile here](https://github.com/ssddanbrown). All
+reported by contacting the project team at the email address shown on [the profile here](https://github.com/EnriqueTMT). All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
