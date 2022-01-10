@@ -1,62 +1,46 @@
 # BookStack
 
-[![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg)](https://github.com/BookStackApp/BookStack/releases/latest)
-[![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
-[![Crowdin](https://badges.crowdin.net/bookstack/localized.svg)](https://crowdin.com/project/bookstack)
-![Discord](https://img.shields.io/static/v1?label=chat&message=discord&color=738adb&logo=discord)
-[![Repo Stats](https://img.shields.io/static/v1?label=GitHub+project&message=stats&color=f27e3f)](https://gh-stats.bookstackapp.com/)
-[![Build Status](https://github.com/BookStackApp/BookStack/workflows/phpunit/badge.svg)](https://github.com/BookStackApp/BookStack/actions)
-[![StyleCI](https://github.styleci.io/repos/41589337/shield?style=flat)](https://github.styleci.io/repos/41589337)
-
-A platform for storing and organising information and documentation. Details for BookStack can be found on the official website at https://www.bookstackapp.com/.
+A platform for free and better textbooks. Built on top of BookStack. Can learn more at https://www.MillieText.com/.
 
 * [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)
 * [Documentation](https://www.bookstackapp.com/docs)
 * [Demo Instance](https://demo.bookstackapp.com)
     * [Admin Login](https://demo.bookstackapp.com/login?email=admin@example.com&password=password)
-* [Screenshots](https://www.bookstackapp.com/#screenshots) 
-* [BookStack Blog](https://www.bookstackapp.com/blog)
-* [Issue List](https://github.com/BookStackApp/BookStack/issues)
-* [Discord Chat](https://discord.gg/ztkBqR2)
 
 ## 📚 Project Definition
 
-BookStack is an opinionated wiki system that provides a pleasant and simple out-of-the-box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it but they should not interfere with the core simple user experience.
+MillieText is a place where free textbooks can be accessed. Textbooks that follow our student-friendly format and include promised platform features. Learn more at [MillieText.com](https://discord.gg/ztkBqR2).
 
-BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above.
-
-In regard to development philosophy, BookStack has a relaxed, open & positive approach. At the end of the day this is free software developed and maintained by people donating their own free time.
+This project is built on top of [BookStack](https://github.com/BookStackApp/BookStack). Their project definition is "BookStack is an opinionated wiki system that provides a pleasant and simple out-of-the-box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it but they should not interfere with the core simple user experience."
 
 ## 🛣️ Road Map
 
-Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in the "Release Process" section below.
+Below is a feature focused road map view for MillieText to provide a sense of direction of where the project is going. BookStack has a different road map, but as mentioned before, we are taking this project in a different direction to focuse on making textbooks free and better. This road map can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map.
 
-- **Platform REST API** *(Base Implemented, In review and roll-out)*
-    - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
-- **Editor Alignment & Review**
-    - *Review the page editors with goal of achieving increased interoperability & feature parity while also considering collaborative editing potential.*
-- **Permission System Review**
-    - *Improvement in how permissions are applied and a review of the efficiency of the permission & roles system.*
-- **Installation & Deployment Process Revamp**
-    - *Creation of a streamlined & secure process for users to deploy & update BookStack with reduced development requirements (No git or composer requirement).*
+- **Hyperlink or Inner Window Feature**
+    - *Videos and practice that can be accessed through an "inner window" by clicking §.*
+- **Image Block**
+    - *Swipe through images in a block where a single image would be in the textbook.*
+- **Annotations**
+    - *Use basic note tools such as highlighting and underlining through a right-click menu.*
+- **Improve WYSIWYG System**
+    - *Admin login into a book editor (WYSIWYG system) that allows admins to write new content, publish content, and edit published content.*
+- **Flagging and Suggestion**
+    - *Flag and suggest edits for words or phrases through a right-click menu.*
+- **Analytics**
+    - *See data of suggestions and flagged phrases and words.*
+- **Flashcards**
+    - *Create flashcards in the textbook through a right-click menu.*
 
-## 🚀 Release Versioning & Process
+## 🚀 Launch
 
-BookStack releases are each assigned a date-based version number in the format `v<year>.<month>[.<optional_patch_number>]`. For example:
-
-- `v20.12` - New feature released launched during December 2020. 
-- `v21.06.2` - Second patch release upon the June 2021 feature release.
-
-Patch releases are generally fairly minor, primarily intended for fixes and therefore is fairly unlikely to cause breakages upon update.
-Feature releases are generally larger, bringing new features in addition to fixes and enhancements. These releases have a greater chance of introducing breaking changes upon update, so it's worth checking for any notes in the [update guide](https://www.bookstackapp.com/docs/admin/updates/).
-
-Each BookStack release will have a [milestone](https://github.com/BookStackApp/BookStack/milestones) created with issues & pull requests assigned to it to define what will be in that release. Milestones are built up then worked through until complete at which point, after some testing and documentation updates, the release will be deployed.
-
-Feature releases, and some patch releases, will be accompanied by a post on the [BookStack blog](https://www.bookstackapp.com/blog/) which will provide additional detail on features, changes & updates otherwise the [GitHub release page](https://github.com/BookStackApp/BookStack/releases) will show a list of changes. You can sign up to be alerted to new BookStack blogs posts (once per week maximum) [at this link](https://updates.bookstackapp.com/signup/bookstack-news-and-updates).
+MillieText will launch when two conditions are met:
+- `Platform MVP (web app)` - At least 57% of the features are complete (includes main features and tailoring the platform to our needs).
+- `Textbook MVP` - At least half of a single textbook with a cited textbook, complete student-friendly design, and videos attached to each §.
 
 ## 🛠️ Development & Testing
 
-All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
+All development on MillieText is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
 * [Node.js](https://nodejs.org/en/) v14.0+
 
@@ -76,7 +60,7 @@ npm run production
 npm run dev
 ```
 
-BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the database name, user name and password all defined as `bookstack-test`. You will have to create that database and that set of credentials before testing.
+BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. MillieText will be doing the same. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the database name, user name and password all defined as `bookstack-test`. You will have to create that database and that set of credentials before testing.
 
 The testing database will also need migrating and seeding beforehand. This can be done with the following commands:
 
@@ -133,25 +117,23 @@ Once the database has been migrated & seeded, you can run the tests like so:
 docker-compose run app php vendor/bin/phpunit
 ```
 
-## 🌎 Translations
+## 🌎 Translations (from BookStack)
 
 Translations for text within BookStack is managed through the [BookStack project on Crowdin](https://crowdin.com/project/bookstack). Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time. Crowdin is the preferred way to provide translations, otherwise the raw translations files can be found within the `resources/lang` path.
 
-If you'd like a new language to be added to Crowdin, for you to be able to provide translations for, please [open a new issue here](https://github.com/BookStackApp/BookStack/issues/new?template=language_request.md).
-
 Please note, translations in BookStack are provided to the "Crowdin Global Translation Memory" which helps BookStack and other projects with finding translations. If you are not happy with contributing to this then providing translations to BookStack, even manually via GitHub, is not advised.
+
+Abide by this as MillieText will be integrating this feature as BookStack works on it. 
 
 ## 🎁 Contributing, Issues & Pull Requests
 
 Feel free to create issues to request new features or to report bugs & problems. Just please follow the template given when creating the issue.
 
-Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge. Just because a feature request exists, or is tagged, does not mean that feature would be accepted into the core project.
-
 Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
-The project's code of conduct [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/CODE_OF_CONDUCT.md).
+The project's code of conduct [can be found here](https://github.com/MillieText/webapp/blob/master/.github/CODE_OF_CONDUCT.md).
 
-## 🔒 Security
+## 🔒 Security (from BookStack)
 
 Security information for administering a BookStack instance can be found on the [documentation site here](https://www.bookstackapp.com/docs/admin/security/).
 
@@ -159,26 +141,25 @@ If you'd like to be notified of new potential security concerns you can [sign-up
 
 If you would like to report a security concern, details of doing so can [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/SECURITY.md).
 
-## ♿ Accessibility
+## ♿ Accessibility (from BookStack)
 
 We want BookStack to remain accessible to as many people as possible. We aim for at least WCAG 2.1 Level A standards where possible although we do not strictly test this upon each release. If you come across any accessibility issues please feel free to open an issue.
 
 ## 🖥️ Website, Docs & Blog
 
-The website which contains the project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
+The website which contains the project docs & Blog can be found in the [MillieText/landing](https://github.com/MillieText/landing) repo.
 
 ## ⚖️ License
 
-The BookStack source is provided under the MIT License. The libraries used by, and included with, BookStack are provided under their own licenses.
+The BookStack source is provided under the MIT License. The libraries used by, and included with, MillieText are provided under their own licenses.
 
 ## 👪 Attribution
 
-The great people that have worked to build and improve BookStack can [be seen here](https://github.com/BookStackApp/BookStack/graphs/contributors).
+The great people that have worked to build and improve BookStack can [be seen here](https://github.com/MillieText/webapp/graphs/contributors).
 
-The wonderful people that have provided translations, either through GitHub or via Crowdin [can be seen here](https://github.com/BookStackApp/BookStack/blob/master/.github/translators.txt).
+These are the great open-source projects used to help build MillieText:
 
-These are the great open-source projects used to help build BookStack:
-
+* [BookStack](https://www.bookstackapp.com/)
 * [Laravel](http://laravel.com/)
 * [TinyMCE](https://www.tinymce.com/)
 * [CodeMirror](https://codemirror.net)
