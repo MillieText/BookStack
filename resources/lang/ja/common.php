@@ -71,24 +71,25 @@ return [
     'list_view' => 'リスト形式',
     'default' => 'デフォルト',
     'breadcrumb' => 'パンくずリスト',
-    'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
-    'never' => 'Never',
+    'status' => '状態',
+    'status_active' => '有効',
+    'status_inactive' => '無効',
+    'never' => '該当なし',
+    'none' => 'なし',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
-    'profile_menu' => 'Profile Menu',
+    'header_menu_expand' => 'ヘッダーメニューを展開',
+    'profile_menu' => 'プロフィールメニュー',
     'view_profile' => 'プロフィール表示',
     'edit_profile' => 'プロフィール編集',
     'dark_mode' => 'ダークモード',
     'light_mode' => 'ライトモード',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Show Secondary Information',
-    'tab_content' => 'Content',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_info' => '情報',
+    'tab_info_label' => 'タブ: サブコンテンツを表示',
+    'tab_content' => '内容',
+    'tab_content_label' => 'タブ: メインコンテンツを表示',
 
     // Email Content
     'email_action_help' => '":actionText" をクリックできない場合、以下のURLをコピーしブラウザで開いてください:',

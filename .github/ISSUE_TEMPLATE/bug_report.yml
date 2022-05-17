@@ -1,6 +1,5 @@
 name: Bug Report
 description: Create a report to help us improve or fix things
-title: "[Bug Report]: "
 labels: [":bug: Bug"]
 body:
   - type: textarea
@@ -34,6 +33,15 @@ body:
     attributes:
       label: Screenshots or Additional Context
       description: Provide any additional context and screenshots here to help us solve this issue
+    validations:
+      required: false
+  - type: input
+    id: browserdetails
+    attributes:
+      label: Browser Details
+      description: |
+        If this is an issue that occurs when using the BookStack interface, please provide details of the browser used which presents the reported issue.
+      placeholder: (eg. Firefox 97 (64-bit) on Windows 11)
     validations:
       required: false
   - type: input

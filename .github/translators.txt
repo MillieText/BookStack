@@ -158,14 +158,14 @@ HenrijsS :: Latvian
 Pascal R-B (pborgner) :: German
 Boris (Ginfred) :: Russian
 Jonas Anker Rasmussen (jonasanker) :: Danish
-Gerwin de Keijzer (gdekeijzer) :: Dutch; German; German Informal
+Gerwin de Keijzer (gdekeijzer) :: Dutch; German Informal; German
 kometchtech :: Japanese
 Auri (Atalonica) :: Catalan
 Francesco Franchina (ffranchina) :: Italian
 Aimrane Kds (aimrane.kds) :: Arabic
 whenwesober :: Indonesian
 Rem (remkovdhoef) :: Dutch
-syn7ax69 :: Bulgarian; Turkish
+syn7ax69 :: Bulgarian; Turkish; German
 Blaade :: French
 Behzad HosseinPoor (behzad.hp) :: Persian
 Ole Aldric (Swoy) :: Norwegian Bokmal
@@ -210,3 +210,36 @@ Tomáš Batelka (Vofy) :: Czech
 Mundo Racional (ismael.mesquita) :: Portuguese, Brazilian
 Zarik (3apuk) :: Russian
 Ali Shaatani (a.shaatani) :: Arabic
+ChacMaster :: Portuguese, Brazilian
+Saeed (saeed205) :: Persian
+Julesdevops :: French
+peter cerny (posli.to.semka) :: Slovak
+Pavel Karlin (pavelkarlin) :: Russian
+SmokingCrop :: Dutch
+Maciej Lebiest (Szwendacz) :: Polish
+DiscordDigital :: German; German Informal
+Gábor Marton (dodver) :: Hungarian
+Jasell :: Swedish
+Ghost_chu (ghostchu) :: Chinese Simplified
+Ravid Shachar (ravidshachar) :: Hebrew
+Helga Guchshenskaya (guchshenskaya) :: Russian
+daniel chou (chou0214) :: Chinese Traditional
+Manolis PATRIARCHE (m.patriarche) :: French
+Mohammed Haboubi (haboubi92) :: Arabic
+roncallyt :: Portuguese, Brazilian
+goegol :: Dutch
+msevgen :: Turkish
+Khroners :: French
+MASOUD HOSSEINY (masoudme) :: Persian
+Thomerson Roncally (roncallyt) :: Portuguese, Brazilian
+metaarch :: Bulgarian
+Xabi (xabikip) :: Basque
+pedromcsousa :: Portuguese
+Nir Louk (looknear) :: Hebrew
+Alex (qianmengnet) :: Chinese Simplified
+stothew :: German
+sgenc :: Turkish
+Shukrullo (vodiylik) :: Uzbek
+William W. (Nevnt) :: Chinese Traditional
+eamaro :: Portuguese
+Ypsilon-dev :: Arabic

@@ -163,7 +163,6 @@ em, i, .italic {
 
 small, p.small, span.small, .text-small {
   font-size: 0.75rem;
-  @include lightDark(color, #5e5e5e, #999);
 }
 
 sup, .superscript {
@@ -310,6 +309,7 @@ li > ol, li > ul {
 }
 
 li.checkbox-item, li.task-list-item {
+  display: list-item;
   list-style: none;
   margin-left: -($-m * 1.2);
   input[type="checkbox"] {

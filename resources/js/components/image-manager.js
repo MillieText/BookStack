@@ -74,6 +74,10 @@ class ImageManager {
 
         this.listContainer.addEventListener('event-emit-select-image', this.onImageSelectEvent.bind(this));
 
+        this.listContainer.addEventListener('error', event => {
+            event.target.src = baseUrl('loading_error.png');
+        }, true);
+
         onSelect(this.selectButton, () => {
             if (this.callback) {
                 this.callback(this.lastSelected);
@@ -118,6 +122,9 @@ class ImageManager {
         };
 
         const {data: html} = await window.$http.get(`images/${this.type}`, params);
+        if (params.page === 1) {
+            this.listContainer.innerHTML = '';
+        }
         this.addReturnedHtmlElementsToList(html);
         removeLoading(this.listContainer);
     }

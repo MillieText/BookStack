@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute jābūt starp :min un :max cipariem.',
     'email'                => ':attribute jābūt derīgai e-pasta adresei.',
     'ends_with' => ':attribute jābeidzas ar vienu no :values',
+    'file'                 => ':attribute jābūt derīgam failam.',
     'filled'               => ':attribute lauks ir obligāts.',
     'gt'                   => [
         'numeric' => ':attribute jābūt lielākam kā :value.',

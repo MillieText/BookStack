@@ -2,16 +2,17 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use BookStack\Util\WebSafeMimeSniffer;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class Controller extends BaseController
 {
@@ -53,14 +54,9 @@ abstract class Controller extends BaseController
      */
     protected function showPermissionError()
     {
-        if (request()->wantsJson()) {
-            $response = response()->json(['error' => trans('errors.permissionJson')], 403);
-        } else {
-            $response = redirect('/');
-            $this->showErrorNotification(trans('errors.permission'));
-        }
+        $message = request()->wantsJson() ? trans('errors.permissionJson') : trans('errors.permission');
 
-        throw new HttpResponseException($response);
+        throw new NotifyException($message, '/', 403);
     }
 
     /**
@@ -120,7 +116,30 @@ abstract class Controller extends BaseController
     {
         return response()->make($content, 200, [
             'Content-Type'           => 'application/octet-stream',
-            'Content-Disposition'    => 'attachment; filename="' . $fileName . '"',
+            'Content-Disposition'    => 'attachment; filename="' . str_replace('"', '', $fileName) . '"',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
+
+    /**
+     * Create a response that forces a download, from a given stream of content.
+     */
+    protected function streamedDownloadResponse($stream, string $fileName): StreamedResponse
+    {
+        return response()->stream(function () use ($stream) {
+
+            // End & flush the output buffer, if we're in one, otherwise we still use memory.
+            // Output buffer may or may not exist depending on PHP `output_buffering` setting.
+            // Ignore in testing since output buffers are used to gather a response.
+            if (!empty(ob_get_status()) && !app()->runningUnitTests()) {
+                ob_end_clean();
+            }
+
+            fpassthru($stream);
+            fclose($stream);
+        }, 200, [
+            'Content-Type'           => 'application/octet-stream',
+            'Content-Disposition'    => 'attachment; filename="' . str_replace('"', '', $fileName) . '"',
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }
@@ -135,7 +154,28 @@ abstract class Controller extends BaseController
 
         return response()->make($content, 200, [
             'Content-Type'           => $mime,
-            'Content-Disposition'    => 'inline; filename="' . $fileName . '"',
+            'Content-Disposition'    => 'inline; filename="' . str_replace('"', '', $fileName) . '"',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
+
+    /**
+     * Create a file download response that provides the file with a content-type
+     * correct for the file, in a way so the browser can show the content in browser,
+     * for a given content stream.
+     */
+    protected function streamedInlineDownloadResponse($stream, string $fileName): StreamedResponse
+    {
+        $sniffContent = fread($stream, 1000);
+        $mime = (new WebSafeMimeSniffer())->sniff($sniffContent);
+
+        return response()->stream(function () use ($sniffContent, $stream) {
+            echo $sniffContent;
+            fpassthru($stream);
+            fclose($stream);
+        }, 200, [
+            'Content-Type'           => $mime,
+            'Content-Disposition'    => 'inline; filename="' . str_replace('"', '', $fileName) . '"',
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }

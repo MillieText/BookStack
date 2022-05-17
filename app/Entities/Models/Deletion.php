@@ -10,10 +10,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
+ * @property int       $id
+ * @property int       $deleted_by
+ * @property string    $deletable_type
+ * @property int       $deletable_id
  * @property Deletable $deletable
  */
 class Deletion extends Model implements Loggable
 {
+    protected $hidden = [];
+
     /**
      * Get the related deletable record.
      */
@@ -59,7 +65,7 @@ class Deletion extends Model implements Loggable
     /**
      * Get a URL for this specific deletion.
      */
-    public function getUrl($path): string
+    public function getUrl(string $path = 'restore'): string
     {
         return url("/settings/recycle-bin/{$this->id}/" . ltrim($path, '/'));
     }

@@ -3,9 +3,7 @@
 @section('body')
     <div class="container small">
 
-        <div class="py-m">
-            @include('settings.parts.navbar', ['selected' => 'users'])
-        </div>
+        @include('settings.parts.navbar', ['selected' => 'users'])
 
         <section class="card content-wrap">
             <h1 class="list-heading">{{ $user->id === user()->id ? trans('settings.users_edit_profile') : trans('settings.users_edit') }}</h1>
@@ -35,22 +33,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half gap-xl v-center">
-                        <div>
-                            <label for="user-language" class="setting-list-label">{{ trans('settings.users_preferred_language') }}</label>
-                            <p class="small">
-                                {{ trans('settings.users_preferred_language_desc') }}
-                            </p>
-                        </div>
-                        <div>
-                            <select name="setting[language]" id="user-language">
-                                @foreach(trans('settings.language_select') as $lang => $label)
-                                    <option @if(setting()->getUser($user, 'language', config('app.default_locale')) === $lang) selected @endif value="{{ $lang }}">{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
+                    @include('users.parts.language-option-row', ['value' => setting()->getUser($user, 'language', config('app.default_locale'))])
                 </div>
 
                 <div class="text-right">

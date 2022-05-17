@@ -3,11 +3,7 @@
 @section('body')
 <div class="container">
 
-    <div class="grid left-focus v-center no-row-gap">
-        <div class="py-m">
-            @include('settings.parts.navbar', ['selected' => 'audit'])
-        </div>
-    </div>
+    @include('settings.parts.navbar', ['selected' => 'audit'])
 
     <div class="card content-wrap auto-height">
         <h1 class="list-heading">{{ trans('settings.audit') }}</h1>
@@ -18,9 +14,9 @@
                 <label for="">{{ trans('settings.audit_event_filter') }}</label>
                 <button refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('common.sort_options') }}" class="input-base text-left">{{ $listDetails['event'] ?: trans('settings.audit_event_filter_no_filter') }}</button>
                 <ul refs="dropdown@menu" class="dropdown-menu">
-                    <li @if($listDetails['event'] === '') class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => '']) }}">{{ trans('settings.audit_event_filter_no_filter') }}</a></li>
+                    <li @if($listDetails['event'] === '') class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => '']) }}" class="text-item">{{ trans('settings.audit_event_filter_no_filter') }}</a></li>
                     @foreach($activityTypes as $type)
-                        <li @if($type === $listDetails['event']) class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => $type]) }}">{{ $type }}</a></li>
+                        <li @if($type === $listDetails['event']) class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => $type]) }}" class="text-item">{{ $type }}</a></li>
                     @endforeach
                 </ul>
             </div>

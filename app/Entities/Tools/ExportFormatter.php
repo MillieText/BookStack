@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Uploads\ImageService;
+use BookStack\Util\CspService;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
@@ -15,16 +16,18 @@ use Throwable;
 
 class ExportFormatter
 {
-    protected $imageService;
-    protected $pdfGenerator;
+    protected ImageService $imageService;
+    protected PdfGenerator $pdfGenerator;
+    protected CspService $cspService;
 
     /**
      * ExportService constructor.
      */
-    public function __construct(ImageService $imageService, PdfGenerator $pdfGenerator)
+    public function __construct(ImageService $imageService, PdfGenerator $pdfGenerator, CspService $cspService)
     {
         $this->imageService = $imageService;
         $this->pdfGenerator = $pdfGenerator;
+        $this->cspService = $cspService;
     }
 
     /**
@@ -37,8 +40,9 @@ class ExportFormatter
     {
         $page->html = (new PageContent($page))->render();
         $pageHtml = view('pages.export', [
-            'page'   => $page,
-            'format' => 'html',
+            'page'       => $page,
+            'format'     => 'html',
+            'cspContent' => $this->cspService->getCspMetaTagValue(),
         ])->render();
 
         return $this->containHtml($pageHtml);
@@ -56,9 +60,10 @@ class ExportFormatter
             $page->html = (new PageContent($page))->render();
         });
         $html = view('chapters.export', [
-            'chapter' => $chapter,
-            'pages'   => $pages,
-            'format'  => 'html',
+            'chapter'    => $chapter,
+            'pages'      => $pages,
+            'format'     => 'html',
+            'cspContent' => $this->cspService->getCspMetaTagValue(),
         ])->render();
 
         return $this->containHtml($html);
@@ -76,6 +81,7 @@ class ExportFormatter
             'book'         => $book,
             'bookChildren' => $bookTree,
             'format'       => 'html',
+            'cspContent'   => $this->cspService->getCspMetaTagValue(),
         ])->render();
 
         return $this->containHtml($html);
@@ -92,6 +98,7 @@ class ExportFormatter
         $html = view('pages.export', [
             'page'   => $page,
             'format' => 'pdf',
+            'engine' => $this->pdfGenerator->getActiveEngine(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -113,6 +120,7 @@ class ExportFormatter
             'chapter' => $chapter,
             'pages'   => $pages,
             'format'  => 'pdf',
+            'engine'  => $this->pdfGenerator->getActiveEngine(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -130,6 +138,7 @@ class ExportFormatter
             'book'         => $book,
             'bookChildren' => $bookTree,
             'format'       => 'pdf',
+            'engine'       => $this->pdfGenerator->getActiveEngine(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -144,8 +153,29 @@ class ExportFormatter
     {
         $html = $this->containHtml($html);
         $html = $this->replaceIframesWithLinks($html);
+        $html = $this->openDetailElements($html);
 
         return $this->pdfGenerator->fromHtml($html);
+    }
+
+    /**
+     * Within the given HTML content, Open any detail blocks.
+     */
+    protected function openDetailElements(string $html): string
+    {
+        libxml_use_internal_errors(true);
+
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $xPath = new DOMXPath($doc);
+
+        $details = $xPath->query('//details');
+        /** @var DOMElement $detail */
+        foreach ($details as $detail) {
+            $detail->setAttribute('open', 'open');
+        }
+
+        return $doc->saveHTML();
     }
 
     /**
@@ -296,7 +326,7 @@ class ExportFormatter
             $text .= $this->pageToMarkdown($page) . "\n\n";
         }
 
-        return $text;
+        return trim($text);
     }
 
     /**
@@ -308,12 +338,12 @@ class ExportFormatter
         $text = '# ' . $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild instanceof Chapter) {
-                $text .= $this->chapterToMarkdown($bookChild);
+                $text .= $this->chapterToMarkdown($bookChild) . "\n\n";
             } else {
-                $text .= $this->pageToMarkdown($bookChild);
+                $text .= $this->pageToMarkdown($bookChild) . "\n\n";
             }
         }
 
-        return $text;
+        return trim($text);
     }
 }

@@ -72,22 +72,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = [
         'password', 'remember_token', 'system_name', 'email_confirmed', 'external_auth_id', 'email',
-        'created_at', 'updated_at', 'image_id',
+        'created_at', 'updated_at', 'image_id', 'roles', 'avatar', 'user_id',
     ];
 
     /**
      * This holds the user's permissions when loaded.
-     *
-     * @var ?Collection
      */
-    protected $permissions;
+    protected ?Collection $permissions;
 
     /**
      * This holds the default user when loaded.
      *
      * @var null|User
      */
-    protected static $defaultUser = null;
+    protected static ?User $defaultUser = null;
 
     /**
      * Returns the default public user.
@@ -146,7 +144,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function attachDefaultRole(): void
     {
-        $roleId = setting('registration-role');
+        $roleId = intval(setting('registration-role'));
         if ($roleId && $this->roles()->where('id', '=', $roleId)->count() === 0) {
             $this->roles()->attach($roleId);
         }

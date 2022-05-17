@@ -3,11 +3,8 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Tools\Markdown\CustomListItemRenderer;
-use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
+use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 use BookStack\Exceptions\ImageUploadException;
-use BookStack\Facades\Theme;
-use BookStack\Theming\ThemeEvents;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\HtmlContentFilter;
@@ -17,15 +14,10 @@ use DOMNode;
 use DOMNodeList;
 use DOMXPath;
 use Illuminate\Support\Str;
-use League\CommonMark\Block\Element\ListItem;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
-use League\CommonMark\Extension\Table\TableExtension;
-use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 class PageContent
 {
-    protected $page;
+    protected Page $page;
 
     /**
      * PageContent constructor.
@@ -53,26 +45,9 @@ class PageContent
     {
         $markdown = $this->extractBase64ImagesFromMarkdown($markdown);
         $this->page->markdown = $markdown;
-        $html = $this->markdownToHtml($markdown);
+        $html = (new MarkdownToHtml($markdown))->convert();
         $this->page->html = $this->formatHtml($html);
         $this->page->text = $this->toPlainText();
-    }
-
-    /**
-     * Convert the given Markdown content to a HTML string.
-     */
-    protected function markdownToHtml(string $markdown): string
-    {
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new TableExtension());
-        $environment->addExtension(new TaskListExtension());
-        $environment->addExtension(new CustomStrikeThroughExtension());
-        $environment = Theme::dispatch(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $environment) ?? $environment;
-        $converter = new CommonMarkConverter([], $environment);
-
-        $environment->addBlockRenderer(ListItem::class, new CustomListItemRenderer(), 10);
-
-        return $converter->convertToHtml($markdown);
     }
 
     /**
@@ -109,15 +84,35 @@ class PageContent
 
     /**
      * Convert all inline base64 content to uploaded image files.
+     * Regex is used to locate the start of data-uri definitions then
+     * manual looping over content is done to parse the whole data uri.
+     * Attempting to capture the whole data uri using regex can cause PHP
+     * PCRE limits to be hit with larger, multi-MB, files.
      */
     protected function extractBase64ImagesFromMarkdown(string $markdown)
     {
         $matches = [];
-        preg_match_all('/!\[.*?]\(.*?(data:image\/.*?)[)"\s]/', $markdown, $matches);
+        $contentLength = strlen($markdown);
+        $replacements = [];
+        preg_match_all('/!\[.*?]\(.*?(data:image\/.{1,6};base64,)/', $markdown, $matches, PREG_OFFSET_CAPTURE);
 
-        foreach ($matches[1] as $base64Match) {
-            $newUrl = $this->base64ImageUriToUploadedImageUrl($base64Match);
-            $markdown = str_replace($base64Match, $newUrl, $markdown);
+        foreach ($matches[1] as $base64MatchPair) {
+            [$dataUri, $index] = $base64MatchPair;
+
+            for ($i = strlen($dataUri) + $index; $i < $contentLength; $i++) {
+                $char = $markdown[$i];
+                if ($char === ')' || $char === ' ' || $char === "\n" || $char === '"') {
+                    break;
+                }
+                $dataUri .= $char;
+            }
+
+            $newUrl = $this->base64ImageUriToUploadedImageUrl($dataUri);
+            $replacements[] = [$dataUri, $newUrl];
+        }
+
+        foreach ($replacements as [$dataUri, $newUrl]) {
+            $markdown = str_replace($dataUri, $newUrl, $markdown);
         }
 
         return $markdown;
@@ -218,6 +213,9 @@ class PageContent
         foreach ($childNodes as $childNode) {
             $html .= $doc->saveHTML($childNode);
         }
+
+        // Perform required string-level tweaks
+        $html = str_replace(' ', '&nbsp;', $html);
 
         return $html;
     }

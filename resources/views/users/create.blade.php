@@ -4,9 +4,7 @@
 
     <div class="container small">
 
-        <div class="py-m">
-            @include('settings.parts.navbar', ['selected' => 'users'])
-        </div>
+        @include('settings.parts.navbar', ['selected' => 'users'])
 
         <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('settings.users_add_new') }}</h1>
@@ -16,6 +14,7 @@
 
                 <div class="setting-list">
                     @include('users.parts.form')
+                    @include('users.parts.language-option-row', ['value' => old('setting.language') ?? config('app.default_locale')])
                 </div>
 
                 <div class="form-group text-right">

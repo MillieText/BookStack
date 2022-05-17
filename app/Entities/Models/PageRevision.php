@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Class PageRevision.
  *
+ * @property mixed  $id
  * @property int    $page_id
+ * @property string $name
  * @property string $slug
  * @property string $book_slug
  * @property int    $created_by
@@ -20,13 +22,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $summary
  * @property string $markdown
  * @property string $html
+ * @property string $text
  * @property int    $revision_number
  * @property Page   $page
  * @property-read ?User $createdBy
  */
 class PageRevision extends Model
 {
-    protected $fillable = ['name', 'html', 'text', 'markdown', 'summary'];
+    protected $fillable = ['name', 'text', 'summary'];
+    protected $hidden = ['html', 'markdown', 'restricted', 'text'];
 
     /**
      * Get the user that created the page revision.
@@ -46,19 +50,10 @@ class PageRevision extends Model
 
     /**
      * Get the url for this revision.
-     *
-     * @param null|string $path
-     *
-     * @return string
      */
-    public function getUrl($path = null)
+    public function getUrl(string $path = ''): string
     {
-        $url = $this->page->getUrl() . '/revisions/' . $this->id;
-        if ($path) {
-            return $url . '/' . trim($path, '/');
-        }
-
-        return $url;
+        return $this->page->getUrl('/revisions/' . $this->id . '/' . ltrim($path, '/'));
     }
 
     /**

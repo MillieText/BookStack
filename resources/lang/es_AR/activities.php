@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'página creada',
+    'page_create'                 => 'creó la página',
     'page_create_notification'    => 'Página creada correctamente',
     'page_update'                 => 'página actualizada',
     'page_update_notification'    => 'Página actualizada correctamente',
@@ -58,6 +58,10 @@ return [
     'webhook_update_notification' => 'Webhook actualizado correctamente',
     'webhook_delete' => 'webhook eliminado',
     'webhook_delete_notification' => 'Webhook eliminado correctamente',
+
+    // Users
+    'user_update_notification' => 'Usuario actualizado correctamente',
+    'user_delete_notification' => 'Usuario eliminado correctamente',
 
     // Other
     'commented_on'                => 'comentado',

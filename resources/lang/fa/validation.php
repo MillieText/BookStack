@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute باید فقط حروف الفبا، اعداد، خط تیره و زیرخط باشد.',
     'alpha_num'            => ':attribute باید فقط حروف الفبا و اعداد باشد.',
     'array'                => ':attribute باید آرایه باشد.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'کد ارائه شده معتبر نیست یا قبلا استفاده شده است.',
     'before'               => ':attribute باید تاریخی قبل از :date باشد.',
     'between'              => [
         'numeric' => ':attribute باید بین :min و :max باشد.',
@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute باید بین :min و :max رقم باشد.',
     'email'                => ':attribute باید یک ایمیل معتبر باشد.',
     'ends_with' => 'فیلد :attribute باید با یکی از مقادیر زیر خاتمه یابد: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'فیلد :attribute باید مقدار داشته باشد.',
     'gt'                   => [
         'numeric' => ':attribute باید بزرگتر از :value باشد.',
@@ -99,7 +100,7 @@ return [
     ],
     'string'               => 'فیلد :attribute باید متن باشد.',
     'timezone'             => 'فیلد :attribute باید یک منطقه زمانی معتبر باشد.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'کد ارائه شده معتبر نیست یا منقضی شده است.',
     'unique'               => ':attribute قبلا انتخاب شده است.',
     'url'                  => ':attribute معتبر نمی‌باشد.',
     'uploaded'             => 'بارگذاری فایل :attribute موفقیت آمیز نبود.',

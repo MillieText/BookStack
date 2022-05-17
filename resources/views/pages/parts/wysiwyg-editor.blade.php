@@ -1,4 +1,9 @@
+@push('head')
+    <script src="{{ url('/libs/tinymce/tinymce.min.js?ver=5.10.2') }}" nonce="{{ $cspNonce }}"></script>
+@endpush
+
 <div component="wysiwyg-editor"
+     option:wysiwyg-editor:language="{{ config('app.lang') }}"
      option:wysiwyg-editor:page-id="{{ $model->id ?? 0 }}"
      option:wysiwyg-editor:text-direction="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
      option:wysiwyg-editor:image-upload-error-text="{{ trans('errors.image_upload_error') }}"
@@ -12,3 +17,5 @@
 @if($errors->has('html'))
     <div class="text-neg text-small">{{ $errors->first('html') }}</div>
 @endif
+
+@include('pages.parts.editor-translations')

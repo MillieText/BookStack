@@ -19,7 +19,7 @@ return [
     'description' => 'Descrição',
     'role' => 'Cargo',
     'cover_image' => 'Imagem de capa',
-    'cover_image_description' => 'Esta imagem deve ser aproximadamente 440x250px.',
+    'cover_image_description' => 'Esta imagem deve ter aproximadamente 440x250px.',
 
     // Actions
     'actions' => 'Ações',
@@ -74,7 +74,8 @@ return [
     'status' => 'Estado',
     'status_active' => 'Ativo',
     'status_inactive' => 'Inativo',
-    'never' => 'Never',
+    'never' => 'Nunca',
+    'none' => 'Nenhum',
 
     // Header
     'header_menu_expand' => 'Expandir Menu de Cabeçalho',

@@ -144,13 +144,14 @@ class PageRevisionTest extends TestCase
 
     public function test_revision_deletion()
     {
-        $page = Page::first();
+        /** @var Page $page */
+        $page = Page::query()->first();
         $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
 
-        $page = Page::find($page->id);
+        $page->refresh();
         $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
 
-        $page = Page::find($page->id);
+        $page->refresh();
         $beforeRevisionCount = $page->revisions->count();
 
         // Delete the first revision
@@ -158,18 +159,17 @@ class PageRevisionTest extends TestCase
         $resp = $this->asEditor()->delete($revision->getUrl('/delete/'));
         $resp->assertRedirect($page->getUrl('/revisions'));
 
-        $page = Page::find($page->id);
+        $page->refresh();
         $afterRevisionCount = $page->revisions->count();
 
         $this->assertTrue($beforeRevisionCount === ($afterRevisionCount + 1));
 
         // Try to delete the latest revision
         $beforeRevisionCount = $page->revisions->count();
-        $currentRevision = $page->getCurrentRevision();
-        $resp = $this->asEditor()->delete($currentRevision->getUrl('/delete/'));
+        $resp = $this->asEditor()->delete($page->currentRevision->getUrl('/delete/'));
         $resp->assertRedirect($page->getUrl('/revisions'));
 
-        $page = Page::find($page->id);
+        $page->refresh();
         $afterRevisionCount = $page->revisions->count();
         $this->assertTrue($beforeRevisionCount === $afterRevisionCount);
     }
@@ -202,5 +202,20 @@ class PageRevisionTest extends TestCase
 
         $revisionCount = $page->revisions()->count();
         $this->assertEquals(12, $revisionCount);
+    }
+
+    public function test_revision_list_shows_editor_type()
+    {
+        /** @var Page $page */
+        $page = Page::first();
+        $this->asAdmin()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html']);
+
+        $resp = $this->get($page->refresh()->getUrl('/revisions'));
+        $resp->assertElementContains('td', '(WYSIWYG)');
+        $resp->assertElementNotContains('td', '(Markdown)');
+
+        $this->asAdmin()->put($page->getUrl(), ['name' => 'Updated page', 'markdown' => '# Some markdown content']);
+        $resp = $this->get($page->refresh()->getUrl('/revisions'));
+        $resp->assertElementContains('td', '(Markdown)');
     }
 }
